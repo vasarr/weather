@@ -10,6 +10,8 @@ namespace Vasar\Weather;
 
 
 use GuzzleHttp\Client;
+use Vasar\Weather\Exceptions\HttpException;
+use Vasar\Weather\Exceptions\InvalidAgrumentException;
 
 class Weather
 {
@@ -37,6 +39,14 @@ class Weather
     {
         $url = 'https://restapi.amap.com/v3/weather/weatherInfo';
 
+        if (!in_array(strtolower($type), ['base', 'all'])) {
+            throw new InvalidAgrumentException("Invalid type value(base/all): " . $type);
+        }
+
+        if (!in_array(strtolower($format), ['json', 'xml'])) {
+            throw new InvalidAgrumentException("Invalid response format: " . $format);
+        }
+
         $query = array_filter([
             'key' => $this->key,
             'city' => $city,
@@ -44,10 +54,15 @@ class Weather
             'output' => $format,
         ]);
 
-        $response = $this->getGuzzleClient()->get($url, [
-           'query' => $query,
-        ])->getBody()->getContents();
+        try {
+            $response = $this->getGuzzleClient()->get($url, [
+                'query' => $query,
+            ])->getBody()->getContents();
 
-        return 'json' == $format ? json_decode($response, true) : $response;
+            return 'json' == $format ? json_decode($response, true) : $response;
+        } catch (\Exception $e) {
+            throw new HttpException($e->getMessage(), $e->getCode(), $e);
+        }
+
     }
 }
