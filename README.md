@@ -26,12 +26,12 @@ $w = new Weather($key);
 
 ## 获取实时天气
 ```$xslt
-$response = $w->getWeather('深圳');
+$response = $w->getLiveWeather('深圳');
 ```
 
 ## 获取近期的天气预报
 ```$xslt
-$response = $w->getWeather('深圳', 'all');
+$response = $w->getForecastWeather('深圳');
 ```
 
 ## 获取 XML 格式返回值
@@ -41,9 +41,18 @@ $w->getWeather('深圳', 'base', 'XML');
 
 ## 参数说明
 `array | string getWeather($city, $type='base', $format = 'json')`
+
 - $city - 城市名，比如：“深圳”；
 - $type - 返回内容类型：base: 返回实况天气 / all:返回预报天气；
 - $format - 输出的数据格式，默认为 json 格式，当 output 设置为 “xml” 时，输出的为 XML 格式的数据。
+
+`array | string getLiveWeather($city, $format = 'json')`
+
+`array | string getForecastWeather($city, $format = 'json'))`
+
+- $city - 城市名，比如：“深圳”；
+- $format - 输出的数据格式，默认为 json 格式，当 output 设置为 “xml” 时，输出的为 XML 格式的数据。
+
 
 ## 在 Laravel 中使用
 在 Laravel 中使用也是同样的安装方式，配置写在 `config/services.php` 中：
