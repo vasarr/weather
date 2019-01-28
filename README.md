@@ -2,7 +2,9 @@
 
 基于 [高德开放平台](https://lbs.amap.com/api/webservice/guide/api/weatherinfo/) 的 PHP 天气信息组件。
 
-## Installing
+[![Build Status](https://travis-ci.org/vasarr/weather.svg?branch=master)](https://travis-ci.org/vasarr/weather)
+
+## 安装
 
 ```shell
 $ composer require vasar/weather -vvv
