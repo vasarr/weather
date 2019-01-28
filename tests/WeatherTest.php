@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: vasar
  * Date: 2019-01-24
- * Time: 22:45
+ * Time: 22:45.
  */
 
 namespace Vasar\Weather\Tests;
-
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -43,18 +42,17 @@ class WeatherTest extends TestCase
         $w = new Weather('mock-key');
 
         $this->expectException(InvalidAgrumentException::class);
-        $this->expectExceptionMessage("Invalid type value(base/all): foo");
+        $this->expectExceptionMessage('Invalid type value(base/all): foo');
 
         $w->getWeather('深圳', 'foo');
         $this->fail('Failed to assert getWeather throw exception with invalid argument.');
-
     }
 
     public function testGetWeatherWithInvalidFormat()
     {
         $w = new Weather('mock-key');
         $this->expectException(InvalidAgrumentException::class);
-        $this->expectExceptionMessage("Invalid response format: array");
+        $this->expectExceptionMessage('Invalid response format: array');
 
         $w->getWeather('深圳', 'base', 'array');
         $this->fail('Failed to assert getWeather throw exception with invalid argument.');
@@ -67,14 +65,14 @@ class WeatherTest extends TestCase
         $client = \Mockery::mock(Client::class);
         $client->allows()->get('https://restapi.amap.com/v3/weather/weatherInfo', [
             'query' => [
-                'key' => 'mock-key',
-                'city' => '深圳',
+                'key'        => 'mock-key',
+                'city'       => '深圳',
                 'extensions' => 'base',
-                'output' => 'json',
-            ]
+                'output'     => 'json',
+            ],
         ])->andReturn($response);
 
-        $w =\Mockery::mock(Weather::class, ['mock-key'])->makePartial();
+        $w = \Mockery::mock(Weather::class, ['mock-key'])->makePartial();
         $w->allows()->getGuzzleClient()->andReturn($client);
 
         $this->assertSame(['success' => true], $w->getWeather('深圳'));
@@ -85,10 +83,10 @@ class WeatherTest extends TestCase
         $client = \Mockery::mock(Client::class);
         $client->allows()->get('https://restapi.amap.com/v3/weather/weatherInfo', [
             'query' => [
-                'key' => 'mock-key',
-                'city' => '深圳',
+                'key'        => 'mock-key',
+                'city'       => '深圳',
                 'extensions' => 'all',
-                'output' => 'xml',
+                'output'     => 'xml',
             ],
         ])->andReturn($response);
 
