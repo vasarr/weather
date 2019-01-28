@@ -56,10 +56,10 @@ class Weather
         }
 
         $query = array_filter([
-            'key'        => $this->key,
-            'city'       => $city,
+            'key' => $this->key,
+            'city' => $city,
             'extensions' => $type,
-            'output'     => $format,
+            'output' => $format,
         ]);
 
         try {
